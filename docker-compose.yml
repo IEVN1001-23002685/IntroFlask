@@ -1,0 +1,11 @@
+services:
+  python:
+    build: .
+    container_name: introflask_python
+    volumes:
+      - .:/app
+    stdin_open: true
+    tty: true
+    ports:
+      - "5000:5000"
+    command: python app.py
