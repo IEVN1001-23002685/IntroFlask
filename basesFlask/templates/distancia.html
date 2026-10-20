@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{%block container%}
+
+<h1>Distancia</h1>
+
+<form action="/distancia" method="post">
+    <div class="mb-3">
+        <label for="x1" class="form-label">x1:</label>
+        <input type="number" class="form-control" id="x1" name="x1">
+    </div>
+    <div class="mb-3">
+        <label for="x2" class="form-label">x2:</label>
+        <input type="number" class="form-control" id="x2" name="x2">
+    </div>
+    <div class="mb-3">
+        <label for="y1" class="form-label">y1:</label>
+        <input type="number" class="form-control" id="y1" name="y1">
+    </div>
+    <div class="mb-3">
+        <label for="y2" class="form-label">y2:</label>
+        <input type="number" class="form-control" id="y2" name="y2">
+    </div>
+    <label class="form-label">Calcula la distancia:</label>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="operacion" value="distancia" checked>
+        <label class="form-check-label">Calculo</label>
+    </div>
+    <button type="submit" class="btn btn-primary">Calcular</button>
+</form>
+
+<h2>
+    El resultado es {{ "%.2f"|format(resultado)}}
+</h2>
+
+{%endblock%}

@@ -3,4 +3,5 @@
 .env/
 __pycache__/
 *.py[cod]
+basesFlask/static/bootstrap/
 "@ | Set-Content .gitignore

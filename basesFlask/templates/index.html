@@ -1,0 +1,11 @@
+    {% extends "layout.html" %}
+        {%block container%}
+
+    <h1>Hola mundo index</h1>
+    <h2>Curso {{ titulo}}</h2>
+
+    {% for value in lista %}
+         <h2>{{ value }}</h2>
+    {% endfor %}
+
+        {%endblock%}
