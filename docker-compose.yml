@@ -22,7 +22,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root123
       MYSQL_DATABASE: api_utl
-      MYSQL_USER: Saul
+      MYSQL_USER: saul
       MYSQL_PASSWORD: rootsaul
     ports:
       - "3307:3306"
@@ -30,14 +30,22 @@ services:
       - mysql_data:/var/lib/mysql
     healthcheck:
       test:
-        ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot123"]
+        [
+          "CMD",
+          "mysqladmin",
+          "ping",
+          "-h",
+          "localhost",
+          "-uroot",
+          "-p$$MYSQL_ROOT_PASSWORD",
+        ]
       interval: 10s
       timeout: 5s
       retries: 10
       start_period: 30s
 
   phpmyadmin:
-    image: phpmyadmin:latest
+    image: phpmyadmin:5.2.3
     container_name: introflask_phpmyadmin
     restart: unless-stopped
     environment:
@@ -45,7 +53,7 @@ services:
       PMA_PORT: 3306
       UPLOAD_LIMIT: 64M
     ports:
-      - "8080:80"
+      - "8081:80"
     depends_on:
       mysql:
         condition: service_healthy

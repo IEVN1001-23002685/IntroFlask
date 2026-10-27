@@ -1,23 +1,31 @@
-from flask import Flask, jsofy, request, Blueprint
-from flask_mysqldb import MySQL
+from flask import Flask, jsonify
 from flask_cors import CORS
 from config import config
-from blueprints.alumnos import alumno_bp
-from blueprints.maestros import maestros_bp
+from database import mysql
+from blueprints.alumnos.routes import alumnos_bp
+from blueprints.maestros.routes import maestros_bp
+from blueprints.administrativos.routes import administrativos_bp
 
 app = Flask(__name__)
-app.register_blueprint(alumno_bp)
-app.register_blueprint(maestros_bp)
+app.config.from_object(config['development'])
 
+mysql.init_app(app)
 CORS(app)
 
-con = MySQL(app)
+app.register_blueprint(alumnos_bp)
+app.register_blueprint(maestros_bp)
+app.register_blueprint(administrativos_bp)
+
 
 def pagina_no_encontrada(error):
-    return "<h1>Pagina no encontrada<h1/>"
+    return jsonify({
+        'mensaje': 'Recurso no encontrado',
+        'exito': False
+    }), 404
+
+
+app.register_error_handler(404, pagina_no_encontrada)
+
 
 if __name__ == "__main__":
-    app.config.from_object(config['development'])
-    app.register_error_handler(404, pagina_no_encontrada)
-    app.run(host="0.0.0.0", port=5000, debug=app.config["DEBUG"]
-)
+    app.run(host="0.0.0.0", port=5000, debug=app.config["DEBUG"])
